@@ -1,0 +1,8 @@
+{
+  "chainId": 11155111,
+  "address": "0x4D7b251399E5B8Db210Ad2C722B48c6c3A07f795",
+  "deployBlock": 11956531,
+  "txHash": "0x5b94a199632a8e009a9d8b7fe824183c7140bb8fa85c42de06c0a4a7c149a0af",
+  "initialOwner": "0x2631b6C3e0FCcc7CD952F4a12Fd8de27b33E1f2a",
+  "initialSupply": "1000000000000000000000000"
+}
