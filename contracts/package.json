@@ -1,10 +1,14 @@
 {
-  "name": "contracts",
+  "name": "tokenforge-contracts",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "TokenForge (TFG) ERC-20 – Hardhat 3",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "compile": "hardhat compile",
+    "test": "hardhat test",
+    "coverage": "hardhat test --coverage",
+    "deploy:local": "hardhat run scripts/deploy.ts",
+    "deploy:sepolia": "hardhat run scripts/deploy.ts --network sepolia",
+    "verify:sepolia": "hardhat verify --network sepolia 0x4D7b251399E5B8Db210Ad2C722B48c6c3A07f795 0x2631b6C3e0FCcc7CD952F4a12Fd8de27b33E1f2a 1000000000000000000000000"
   },
   "keywords": [],
   "type": "module",
