@@ -1,0 +1,67 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum TransferType {
+  MINT
+  BURN
+  TRANSFER
+}
+
+/// Mỗi event Transfer của contract (mint: from = 0x0, burn: to = 0x0)
+model Transfer {
+  id          Int          @id @default(autoincrement())
+  txHash      String
+  logIndex    Int
+  blockNumber Int
+  blockTime   DateTime
+  from        String // lowercase
+  to          String // lowercase
+  value       Decimal      @db.Decimal(78, 0) // wei
+  type        TransferType
+  createdAt   DateTime     @default(now())
+
+  @@unique([txHash, logIndex])
+  @@index([from])
+  @@index([to])
+  @@index([blockNumber])
+  @@index([type])
+}
+
+/// Mỗi event Approval
+model Approval {
+  id          Int      @id @default(autoincrement())
+  txHash      String
+  logIndex    Int
+  blockNumber Int
+  blockTime   DateTime
+  owner       String
+  spender     String
+  value       Decimal  @db.Decimal(78, 0)
+  createdAt   DateTime @default(now())
+
+  @@unique([txHash, logIndex])
+  @@index([owner])
+  @@index([spender])
+}
+
+/// Số dư suy ra từ các event Transfer đã index
+model Holder {
+  address   String   @id
+  balance   Decimal  @db.Decimal(78, 0)
+  updatedAt DateTime @updatedAt
+
+  @@index([balance])
+}
+
+/// Con trỏ tiến độ của indexer
+model SyncState {
+  id        String   @id
+  lastBlock Int
+  updatedAt DateTime @updatedAt
+}
